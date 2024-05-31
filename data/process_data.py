@@ -4,16 +4,36 @@ import pandas as pd
 
 
 def load_data(messages_filepath, categories_filepath):
+    """
+    Load messages and categories data from CSV files and merge them into a single DataFrame.
+
+    Parameters:
+    messages_filepath (str): Filepath of the messages CSV file.
+    categories_filepath (str): Filepath of the categories CSV file.
+
+    Returns:
+    df (DataFrame): Merged DataFrame containing messages and corresponding categories.
+    """
+    
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath)
 
     # merge dataframes
     df = messages.merge(categories, how='outer', on='id')
 
-
     return df
 
 def clean_data(df):
+    """
+    Clean and preprocess the merged DataFrame.
+
+    Parameters:
+    df (DataFrame): Merged DataFrame containing messages and categories.
+
+    Returns:
+    df (DataFrame): Cleaned and preprocessed DataFrame.
+    """
+
     # split cate columns
     categories = df['categories'].str.split(";", expand=True)
 
@@ -40,6 +60,14 @@ def clean_data(df):
     return df
 
 def save_data(df, database_filename):
+    """
+    Save the cleaned DataFrame to an SQLite database.
+
+    Parameters:
+    df (DataFrame): Cleaned and preprocessed DataFrame.
+    database_filename (str): Filepath of the SQLite database to save the data.
+    """
+    
     engine = create_engine(f'sqlite:///{database_filename}')
     df.to_sql('clean_disaster_data', engine, index=False, if_exists='replace')
 

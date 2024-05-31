@@ -40,6 +40,18 @@ class StartingVerbExtractor(BaseEstimator, TransformerMixin):
         return pd.DataFrame(X_tagged)
 
 def load_data(database_filepath):
+    """
+    Load data from an SQLite database and split it into features (X) and targets (y).
+
+    Parameters:
+    database_filepath (str): Filepath of the SQLite database.
+
+    Returns:
+    X (Series): Features containing messages.
+    y (array): Target values containing categories.
+    category_names (list): List of category names.
+    """
+
     engine = create_engine(f'sqlite:///{database_filepath}')
     df = pd.read_sql_table("clean_disaster_data", engine)
 
@@ -51,6 +63,16 @@ def load_data(database_filepath):
     return X, y.values, column_names
 
 def tokenize(text):
+    """
+    Tokenize and preprocess the text data.
+
+    Parameters:
+    text (str): Input text data.
+
+    Returns:
+    clean_tokens (list): List of preprocessed tokens.
+    """
+
     tokens = word_tokenize(text)
     lemmatizer = WordNetLemmatizer()
 
@@ -63,6 +85,13 @@ def tokenize(text):
     
 
 def build_model():
+    """
+    Build and instantiate the machine learning model pipeline.
+
+    Returns:
+    cv (GridSearchCV): GridSearchCV object with optimized model pipeline.
+    """
+
     # create pipeline
     pipeline = Pipeline([
         ('feature', FeatureUnion([
@@ -87,6 +116,16 @@ def build_model():
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    """
+    Evaluate the machine learning model and print classification report for each category.
+
+    Parameters:
+    model: Trained machine learning model object.
+    X_test (Series): Test features containing messages.
+    Y_test (array): Test targets containing categories.
+    category_names (list): List of category names.
+    """
+
     y_prediction = model.predict(X_test)
 
     for idx, column in enumerate(category_names):
@@ -96,6 +135,14 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
+    """
+    Save the trained model to a file.
+
+    Parameters:
+    model: Trained machine learning model object.
+    model_filepath (str): Filepath to save the model.
+    """
+
     pickle.dump(model, open(model_filepath, 'wb'))
 
 

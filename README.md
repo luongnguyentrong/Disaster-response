@@ -12,6 +12,10 @@
 
 The Udacity Disaster Response Project aims to improve the efficiency of managing natural disasters and emergencies. In critical situations, quick and accurate information is essential for effective relief efforts. By using data science and machine learning, this project categorizes and prioritizes disaster-related messages from social media and other channels. The goal is to enhance disaster response speed and accuracy, ensuring timely resource allocation to those in need, demonstrating the impactful role of data science in real-world challenges.
 
+Finally, this project contains a web app where you can input a message and get classification results.
+
+![Screenshot of Web App](web_screenshot.PNG)
+
 ## File Description<a name="files"></a>
 ~~~~~~~
         disaster_response_pipeline
