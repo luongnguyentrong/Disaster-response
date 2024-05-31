@@ -91,13 +91,12 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
     for idx, column in enumerate(category_names):
         print("Target: ", column)
-        print(classification_report(Y_test[:, column], y_prediction[:, idx]))
+        print(classification_report(Y_test[:, idx], y_prediction[:, idx]))
         print("---" * 10)
 
 
 def save_model(model, model_filepath):
-    with open(model_filepath, 'wb') as f:
-        pickle.dump(model, f)
+    pickle.dump(model, open(model_filepath, 'wb'))
 
 
 def main():
@@ -107,8 +106,6 @@ def main():
         X, Y, category_names = load_data(database_filepath)
         X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
 
-        print(Y_test)
-        
         print('Building model...')
         model = build_model()
         

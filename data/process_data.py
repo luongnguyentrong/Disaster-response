@@ -31,6 +31,9 @@ def clean_data(df):
     df = df.drop(columns=["categories"])
     df = pd.concat([df, categories], axis=1)
 
+    # drop values that is not zero and one
+    df = df.drop(df[df["related"] == 2].index)
+
     # drop duplicates
     df.drop_duplicates(inplace=True)
 
@@ -38,7 +41,7 @@ def clean_data(df):
 
 def save_data(df, database_filename):
     engine = create_engine(f'sqlite:///{database_filename}')
-    df.to_sql('clean_disaster_data', engine, index=False)
+    df.to_sql('clean_disaster_data', engine, index=False, if_exists='replace')
 
 
 def main():
