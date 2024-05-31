@@ -14,7 +14,7 @@ The Udacity Disaster Response Project aims to improve the efficiency of managing
 
 Finally, this project contains a web app where you can input a message and get classification results.
 
-![Screenshot of Web App](web_screenshot.PNG)
+![Screenshot of Web App](web_screenshot.png)
 
 ## File Description<a name="files"></a>
 ~~~~~~~
